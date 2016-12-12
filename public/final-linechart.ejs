@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Highcharts Example</title>
+    <!-- 1. Add these JavaScript inclusions in the head of your page -->
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
+         <script src="http://code.highcharts.com/modules/drilldown.js"></script>
+        <script type="text/javascript" src="http://code.highcharts.com/modules/data.js"></script>
+        <style type="text/css">${demo.css}
+        </style>
+        <script type="text/javascript">
+		var datat = <%- JSON.stringify(data) %>
+		var data2=(datat[55]);
+		var data=datat.splice(0,datat.length-1)
+		console.log(data2)
+	    console.log(data);
+		var keys=Object.keys(data[0]);
+		console.log(keys);
+		var styles=keys.splice(2,keys.length);
+		console.log(styles);
+		var mydata=styles.map(function(k){
+			temp={
+			name:k,type:'spline',title:'a',id:k,data:data.filter(function(p){
+			if (p[k]) {
+			return true;
+			  }
+			else {
+			  return false;
+			  }  
+			})
+			.map(function(o){
+			
+			return ([o['sale condition'],o[k]]);
+			  
+			  })}
+			  return temp;
+			});
+			console.log(mydata);
+		var keys2=Object.keys(data2)
+        var mykeys2=keys2.splice(2,keys2.length)
+        var mydata2={name:data2["sale condition"],data:mykeys2.map(function(k){
+		   return {name:k,y:data2[k],drilldown:k};
+		}),colorByPoint: true}
+		var mydata3=[mydata2]
+		console.log(mydata3)
+$(function () {
+    // Create the chart
+    Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Average Sale Price For House Styles'
+        },
+        subtitle: {
+            text: 'Click the bars to veiw Average Sale Price along with time'
+        },
+        xAxis: {
+            type: 'category',
+			title:' House Styles'
+        },
+        yAxis: {
+            title: {
+                text: 'Average Sales price'
+            }
+
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y:.1f}'
+                }
+            }
+        },
+
+        tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> dollars <br/>'
+        },
+
+        series: mydata3,
+        drilldown: {
+            
+            series: mydata
+        }
+    });
+});
+
+</script>
+        
+    </head>
+    <body>
+        
+        <!-- 3. Add the container -->
+        <div id="container" style="width: 800px; height: 400px; margin: 0 auto"></div>
+        
+                
+    </body>
+</html>

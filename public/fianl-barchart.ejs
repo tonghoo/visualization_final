@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	   
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>barchart</title>
+    <!-- 1. Add these JavaScript inclusions in the head of your page -->
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
+        <script type="text/javascript" src="http://code.highcharts.com/modules/data.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+		<style type="text/css">${demo.css}
+        </style>
+		
+
+    <script type="text/javascript">
+   
+    var data = <%- JSON.stringify(data) %>
+	console.log(data);
+	mykey=Object.keys(data[0]);
+	
+	console.log(mykey)
+	names=mykey.splice(0,mykey.length-2)
+	console.log(names);
+
+	var mydata=names.map(function(k){
+	    temp={
+	    name:k,data:data.map(function(o){
+	    return (o[k]);
+		})}
+		return temp;
+		});
+
+	var mylabel=data.map(function(k){
+	    console.log(k);
+		return k['HouseStyle'];
+		});
+	console.log(mydata);
+
+        $(function () {
+		Highcharts.chart('container', {
+            chart: {
+                type: 'bar',
+				     /*events: {
+						selection: function (event) {
+							var text,
+								label;
+							if (event.xAxis) {
+								text = 'min: ' + Highcharts.numberFormat(event.xAxis[0].min, 2) + ', max: ' + Highcharts.numberFormat(event.xAxis[0].max, 2);
+							} else {
+								text = 'Selection reset';
+							}
+							label = this.renderer.label(text, 100, 120)
+								.attr({
+									fill: Highcharts.getOptions().colors[0],
+									padding: 10,
+									r: 5,
+									zIndex: 8
+								})
+								.css({
+									color: '#FFFFFF'
+								})
+								.add();
+
+							setTimeout(function () {
+								label.fadeOut();
+							}, 1000);
+						}
+					},
+					zoomType: 'xy'*/
+            },
+       
+           series: mydata,
+            title: {
+                text: 'The number of House sales for Each House Style by Year'
+            },
+			subtitle: {
+					text: 'Click on the Legend to show the specific years you want to display'
+				},
+			xAxis: {
+            categories: mylabel,
+            title: {
+                text: 'House Style'
+            }
+        },
+		   
+			 legend: {
+				layout: 'vertical',
+				align: 'right',
+				verticalAlign: 'bottom',
+				x: -40,
+				y: -70,
+				floating: true,
+				borderWidth: 1,
+				backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+				shadow: true
+			},
+			yAxis: {
+                title: {
+                    text: 'The Number of House'
+                }
+            }
+			
+        });
+
+
+        });
+            </script>
+        
+    </head>
+    <body>
+        
+        <!-- 3. Add the container -->
+        <div id="container" style="width: 800px; height: 400px; margin: 0 auto"></div>
+        <div ng-controller="AppCtrl" class="md-padding" ng-cloak>
+  <div>
+
+
+  </div>
+</div>
+                
+    </body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Highcharts Example</title>
+    <!-- 1. Add these JavaScript inclusions in the head of your page -->
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
+         <script src="http://code.highcharts.com/modules/drilldown.js"></script>
+        <script type="text/javascript" src="http://code.highcharts.com/modules/data.js"></script>
+        <style type="text/css">${demo.css}
+        </style>
+        <script type="text/javascript">
+		var data = <%- JSON.stringify(data) %>
+	
+
+	    console.log(data)
+		var Normal={name:"Normal",color:"rgba(255,192,203,.6)",data:[]};
+		var Abnorml={name:'Abnorml',color:'rgba(128,0,128,.6)',data:[]};
+		var AdjLand={name:'AdjLand',color:'rgba(65,105,225,.6)',data:[]};
+		var Alloca={name:'Alloca',color:'rgba(0,134,139,.5)',data:[]};
+		var Family={name:'Family	',color:'rgba(61,145,64,.5)',data:[]};
+		var Partial={name:'Partial',color:'rgba(255,165,0,.5)',data:[]};
+		var mydata={Normal,Abnorml,AdjLand,Alloca,Family,Partial};
+		data.forEach(function(k){
+		   mydata[k.SaleCondition].data.push([k.LotArea,k.SalePrice]);
+		   })
+		mydata2=[mydata.Normal,mydata.Abnorml,mydata.AdjLand,mydata.Alloca,mydata.Family,mydata.Partial]
+		console.log(mydata2);
+
+$(function () {
+    Highcharts.chart('container', {
+        chart: {
+            type: 'scatter',
+            zoomType: 'xy'
+        },
+        title: {
+            text: 'Total Area Versus House Sale Price by Sale Condition'
+        },
+        subtitle: {
+            text: 'Drag to select specific points'
+        },
+        xAxis: {
+            title: {
+                text: 'Sale PriceTotal Area',
+                enabled: true,
+            },
+            startOnTick: true,
+            endOnTick: true,
+            showLastLabel: true
+        },
+        yAxis: {
+            title: {
+                text: 'Total Area (Squar feet)'
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: 0,
+            y: 120,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+            borderWidth: 1
+        },
+        plotOptions: {
+            scatter: {
+                marker: {
+                    radius: 3,
+                    states: {
+                        hover: {
+                            enabled: true,
+                            lineColor: 'rgb(100,100,100)'
+                        }
+                    }
+                },
+                states: {
+                    hover: {
+                        marker: {
+                            enabled: false
+                        }
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<b>{series.name}</b><br>',
+                    pointFormat: '{point.x} Squar feet, {point.y} Dollars'
+                }
+            }
+        },
+        series: mydata2
+    });
+});
+
+</script>
+        
+    </head>
+    <body>
+        
+        <!-- 3. Add the container -->
+        <div id="container" style="width: 800px; height: 400px; margin: 0 auto"></div>
+        
+                
+    </body>
+</html>
