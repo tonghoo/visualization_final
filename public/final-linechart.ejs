@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Highcharts Example</title>
+        <title>Average Sale Price For House Styles</title>
     <!-- 1. Add these JavaScript inclusions in the head of your page -->
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
@@ -63,7 +63,7 @@ $(function () {
         },
         yAxis: {
             title: {
-                text: 'Average Sales price'
+                text: 'Average Sales Price (Dollars)'
             }
 
         },
@@ -97,10 +97,13 @@ $(function () {
         
     </head>
     <body>
-        
+        <p><a href="/">Home</a></p>
         <!-- 3. Add the container -->
         <div id="container" style="width: 800px; height: 400px; margin: 0 auto"></div>
-        
+        <h3>Interactive</h3>
+        <p>Click on the bars to view the average sale price along with time of specific House style</p>
+        <h4>Description</h4>
+        <p>To be in a further exploration, bar plot Average Sales Price for House Styles is displayed below. The highest average sale price is the two and a half stories with finished second level house. And the second and third highest average house price are two story house and one story house. It is interesting that the average sales price for two and a half story with unfinished second level house is lower than the one story house. By clicking the columns, the time series for average sales price for each month from 2006 to 2010 will be displayed. </p>
                 
     </body>
 </html>
