@@ -12,3 +12,4 @@ To use this application, please follow these steps:
 6,Cd to /
 7,Use commond "node app.js" to start the applicaition
 8,Open your broswer, type "localhost:8081"
+9,In the file "final project report", desciption about what we do and datasets are included.
